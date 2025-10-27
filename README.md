@@ -1,40 +1,40 @@
-# 🏠 Vancouver Airbnb Investment Intelligence Dashboard
+# Vancouver Airbnb Investment Intelligence Dashboard
 
 A comprehensive data visualization and investment analysis platform for Vancouver's Airbnb market, built with Streamlit and powered by real market data.
 
 ![Dashboard Preview](https://img.shields.io/badge/Status-Live-brightgreen) ![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red) ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 🎯 Overview
+## Overview
 
 This project provides investors, real estate professionals, and market analysts with deep insights into Vancouver's Airbnb market through an interactive dashboard that combines data visualization, investment analysis, and competitive intelligence.
 
-## ✨ Key Features
+## ey Features
 
-### 📊 **Market Intelligence**
+### **Market Intelligence**
 - **Real-time Market Overview** - Key metrics including average prices, ROI potential, and market opportunities
 - **Investment Grading System** - Automated classification of properties (Excellent, Good, Fair, Poor)
 - **Market Saturation Analysis** - Identify oversaturated vs. opportunity-rich areas
 - **Growth Potential Scoring** - Predictive analysis for future market performance
 
-### 🗺️ **Interactive Mapping**
+###  **Interactive Mapping**
 - **Geographic Visualization** - Interactive map with property locations and key metrics
 - **Neighborhood Analysis** - Comprehensive neighborhood-level performance metrics
 - **Competitive Positioning** - Market positioning analysis relative to competitors
 - **One-click Property Access** - Direct links to Airbnb listings for detailed analysis
 
-### 💼 **Investment Analysis**
+###  **Investment Analysis**
 - **ROI Calculations** - Automated return on investment analysis
 - **Revenue Forecasting** - Last 12 months revenue analysis and projections
 - **Occupancy Rate Analysis** - Performance metrics and optimization insights
 - **Price vs. Market Analysis** - Competitive pricing intelligence
 
-### 🏘️ **Neighborhood Intelligence**
+###  **Neighborhood Intelligence**
 - **Top Performing Areas** - Ranked neighborhoods by ROI and performance
 - **Market Trends** - Price movements and occupancy patterns
 - **Investment Opportunities** - Undervalued properties and high-potential areas
 - **Risk Assessment** - Market saturation and competitive landscape analysis
 
-## 🚀 Live Demo
+##    Live Demo
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://vancouver-airbnb-dashboard.streamlit.app/)
 
@@ -152,7 +152,7 @@ This project uses real Vancouver Airbnb data from [Inside Airbnb](https://inside
 - **Data Tables**: Detailed property information
 - **KPI Cards**: Key performance indicators
 
-## 📊 Sample Insights
+## Sample Insights
 
 The dashboard provides actionable insights such as:
 
@@ -162,7 +162,7 @@ The dashboard provides actionable insights such as:
 - **Neighborhood Rankings**: Best performing areas for investment
 - **Operational Insights**: Host performance and optimization opportunities
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -172,18 +172,18 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Inside Airbnb** for providing comprehensive Airbnb market data
 - **Streamlit** for the excellent web app framework
 - **Plotly** and **Folium** for interactive visualizations
 - **Vancouver Open Data** for geographic and neighborhood information
 
-## 📞 Contact
+## ontact
 
 **Manvi Sharma** - [@sharma93manvi](https://github.com/sharma93manvi)
 
