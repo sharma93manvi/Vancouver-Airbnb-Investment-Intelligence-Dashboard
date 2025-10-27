@@ -18,6 +18,9 @@ import warnings
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 import webbrowser
+
+# Import the real data loader
+from real_data_loader import load_real_airbnb_data
 warnings.filterwarnings('ignore')
 
 # Page configuration
@@ -87,21 +90,17 @@ st.markdown("""
 
 @st.cache_data
 def load_data():
-    """Load and cache the Airbnb data with enhanced processing"""
+    """Load and cache the real Airbnb data with enhanced processing"""
     try:
-        df = pd.read_csv('vancouver_airbnb_data.csv')
-        # Convert date columns
-        df['last_review'] = pd.to_datetime(df['last_review'])
+        # Use the real data loader
+        df = load_real_airbnb_data()
         
-        # Enhanced data processing for investment analysis
-        df['roi_potential'] = (df['revenue_ltm'] / (df['price'] * 30 * 12)) * 100  # ROI calculation
+        if df is None:
+            st.error("Failed to load real Airbnb data. Please check the Data folder.")
+            return None
+        
+        # Additional processing for enhanced analysis
         df['profit_margin'] = (df['revenue_ltm'] - (df['price'] * 30 * 12 * 0.3)) / df['revenue_ltm'] * 100
-        df['market_score'] = (df['review_scores_rating'] * 0.3 + 
-                            (df['occupancy_rate'] * 100) * 0.3 + 
-                            (df['revenue_ltm'] / df['revenue_ltm'].max()) * 100 * 0.4)
-        df['investment_grade'] = pd.cut(df['market_score'], 
-                                      bins=[0, 40, 60, 80, 100], 
-                                      labels=['Poor', 'Fair', 'Good', 'Excellent'])
         
         # Competitive analysis metrics
         df['price_vs_market'] = df['price'] / df.groupby('neighbourhood')['price'].transform('mean')
@@ -473,7 +472,7 @@ def main():
     """Enhanced main dashboard function"""
     # Header
     st.markdown('<h1 class="main-header">💼 Vancouver Airbnb Investment Intelligence Dashboard</h1>', unsafe_allow_html=True)
-    st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Comprehensive Market Analysis for Investment & Operations Strategy</p>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Real Vancouver Airbnb Data Analysis for Investment & Operations Strategy</p>', unsafe_allow_html=True)
     
     # Load data
     df = load_data()
