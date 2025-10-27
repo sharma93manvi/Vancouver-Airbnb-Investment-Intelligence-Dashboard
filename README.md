@@ -8,7 +8,7 @@ A comprehensive data visualization and investment analysis platform for Vancouve
 
 This project provides investors, real estate professionals, and market analysts with deep insights into Vancouver's Airbnb market through an interactive dashboard that combines data visualization, investment analysis, and competitive intelligence.
 
-## ey Features
+## Key Features
 
 ### **Market Intelligence**
 - **Real-time Market Overview** - Key metrics including average prices, ROI potential, and market opportunities
@@ -58,7 +58,7 @@ Vancouver-Airbnb-Investment-Intelligence-Dashboard/
 └── README.md                     # This file
 ```
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Python 3.11+
@@ -97,7 +97,7 @@ Vancouver-Airbnb-Investment-Intelligence-Dashboard/
 2. Create a new Heroku app
 3. Deploy using the included `Procfile` and `runtime.txt`
 
-## 📊 Data Sources
+## Data Sources
 
 This project uses real Vancouver Airbnb data from [Inside Airbnb](https://insideairbnb.com/get-the-data/), a mission-driven project that provides data and advocacy about Airbnb's impact on residential communities.
 
@@ -108,7 +108,7 @@ This project uses real Vancouver Airbnb data from [Inside Airbnb](https://inside
 - Geographic neighborhood boundaries
 - Pricing and revenue metrics
 
-## 🔧 Technical Stack
+## Technical Stack
 
 - **Frontend**: Streamlit
 - **Data Processing**: Pandas, NumPy
@@ -117,7 +117,7 @@ This project uses real Vancouver Airbnb data from [Inside Airbnb](https://inside
 - **Geographic Analysis**: GeoPandas, Shapely
 - **Web Scraping**: Selenium, BeautifulSoup, Requests
 
-## 📈 Key Metrics & Analysis
+## Key Metrics & Analysis
 
 ### Investment Metrics
 - **ROI Potential**: Calculated based on revenue, occupancy, and pricing
@@ -136,7 +136,7 @@ This project uses real Vancouver Airbnb data from [Inside Airbnb](https://inside
 - **Positioning Analysis**: Price vs. quality market positioning
 - **Opportunity Identification**: Undervalued and high-potential properties
 
-## 🎨 Dashboard Features
+## Dashboard Features
 
 ### Interactive Filters
 - **Neighborhood Selection**: Filter by specific areas
@@ -183,13 +183,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Plotly** and **Folium** for interactive visualizations
 - **Vancouver Open Data** for geographic and neighborhood information
 
-## ontact
+## Contact
 
 **Manvi Sharma** - [@sharma93manvi](https://github.com/sharma93manvi)
 
 Project Link: [https://github.com/sharma93manvi/Vancouver-Airbnb-Investment-Intelligence-Dashboard](https://github.com/sharma93manvi/Vancouver-Airbnb-Investment-Intelligence-Dashboard)
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - [ ] Real-time data updates
 - [ ] Advanced machine learning predictions
