@@ -99,6 +99,23 @@ def process_real_data(listings_df, calendar_df, reviews_df, reviews_details_df):
         'number_of_reviews', 'availability_365', 'minimum_nights'
     ]].copy()
     
+    # Ensure all required columns exist
+    required_columns = ['growth_potential', 'price_vs_market', 'rating_vs_market']
+    for col in required_columns:
+        if col not in df.columns:
+            if col == 'growth_potential':
+                df[col] = (
+                    (df['occupancy_rate'] * 0.3) +
+                    (df['review_scores_rating'] / 5 * 0.3) +
+                    (1 - df['price'] / df['price'].max() * 0.4)
+                ) * 100
+            elif col == 'price_vs_market':
+                market_avg_price = df['price'].mean()
+                df[col] = df['price'] / market_avg_price
+            elif col == 'rating_vs_market':
+                market_avg_rating = df['review_scores_rating'].mean()
+                df[col] = df['review_scores_rating'] / market_avg_rating
+    
     return df
 
 def calculate_occupancy_rates(calendar_df):

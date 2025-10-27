@@ -226,15 +226,26 @@ def create_operational_insights(df):
         hover_data=['name', 'neighbourhood', 'price', 'review_scores_rating']
     )
     
-    # Host performance analysis
-    host_performance = df.groupby('host_id').agg({
-        'revenue_ltm': 'sum',
-        'review_scores_rating': 'mean',
-        'occupancy_rate': 'mean',
-        'price': 'mean',
-        'name': 'count'
-    }).round(2)
-    host_performance.columns = ['Total Revenue', 'Avg Rating', 'Avg Occupancy', 'Avg Price', 'Property Count']
+    # Host performance analysis (using id as proxy for host_id if not available)
+    host_col = 'host_id' if 'host_id' in df.columns else 'id'
+    if host_col in df.columns:
+        host_performance = df.groupby(host_col).agg({
+            'revenue_ltm': 'sum',
+            'review_scores_rating': 'mean',
+            'occupancy_rate': 'mean',
+            'price': 'mean',
+            'name': 'count'
+        }).round(2)
+        host_performance.columns = ['Total Revenue', 'Avg Rating', 'Avg Occupancy', 'Avg Price', 'Property Count']
+    else:
+        # Create a dummy host performance if no host column is available
+        host_performance = pd.DataFrame({
+            'Total Revenue': [df['revenue_ltm'].sum()],
+            'Avg Rating': [df['review_scores_rating'].mean()],
+            'Avg Occupancy': [df['occupancy_rate'].mean()],
+            'Avg Price': [df['price'].mean()],
+            'Property Count': [len(df)]
+        })
     host_performance = host_performance.sort_values('Total Revenue', ascending=False).head(20)
     
     # Operational recommendations
@@ -449,10 +460,10 @@ def create_market_summary(df):
         'revenue_ltm': 'mean'
     }).sort_values('roi_potential', ascending=False).head(5)
     
-    # Market opportunities - check if growth_potential column exists
+    # Market opportunities - safely check for required columns
     opportunities = {
-        'Undervalued Properties': len(df[(df['price_vs_market'] < 0.8) & (df['rating_vs_market'] > 1.1)]),
-        'High ROI Opportunities': len(df[df['roi_potential'] > df['roi_potential'].quantile(0.8)]),
+        'Undervalued Properties': len(df[(df.get('price_vs_market', 1) < 0.8) & (df.get('rating_vs_market', 1) > 1.1)]) if 'price_vs_market' in df.columns and 'rating_vs_market' in df.columns else 0,
+        'High ROI Opportunities': len(df[df['roi_potential'] > df['roi_potential'].quantile(0.8)]) if 'roi_potential' in df.columns else 0,
         'Growth Potential': len(df[df.get('growth_potential', pd.Series([0] * len(df))) > 70]) if 'growth_potential' in df.columns else 0
     }
     
@@ -471,7 +482,7 @@ def create_market_summary(df):
 def main():
     """Enhanced main dashboard function"""
     # Header
-    st.markdown('<h1 class="main-header">💼 Vancouver Airbnb Investment Intelligence Dashboard</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">Vancouver Airbnb Investment Intelligence Dashboard</h1>', unsafe_allow_html=True)
     st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Real Vancouver Airbnb Data Analysis for Investment & Operations Strategy</p>', unsafe_allow_html=True)
     
     # Load data
@@ -566,13 +577,22 @@ def main():
     if selected_property_type != 'All':
         filtered_df = filtered_df[filtered_df['property_type'] == selected_property_type]
     
-    # Ensure growth_potential column exists
-    if 'growth_potential' not in filtered_df.columns:
-        filtered_df['growth_potential'] = (
-            (filtered_df['occupancy_rate'] * 0.3) +
-            (filtered_df['review_scores_rating'] / 5 * 0.3) +
-            (1 - filtered_df['price'] / filtered_df['price'].max() * 0.4)
-        ) * 100
+    # Ensure all required columns exist
+    required_columns = ['growth_potential', 'price_vs_market', 'rating_vs_market']
+    for col in required_columns:
+        if col not in filtered_df.columns:
+            if col == 'growth_potential':
+                filtered_df[col] = (
+                    (filtered_df['occupancy_rate'] * 0.3) +
+                    (filtered_df['review_scores_rating'] / 5 * 0.3) +
+                    (1 - filtered_df['price'] / filtered_df['price'].max() * 0.4)
+                ) * 100
+            elif col == 'price_vs_market':
+                market_avg_price = filtered_df['price'].mean()
+                filtered_df[col] = filtered_df['price'] / market_avg_price
+            elif col == 'rating_vs_market':
+                market_avg_rating = filtered_df['review_scores_rating'].mean()
+                filtered_df[col] = filtered_df['review_scores_rating'] / market_avg_rating
     
     # Market Summary
     market_summary = create_market_summary(filtered_df)
@@ -602,7 +622,7 @@ def main():
         st.sidebar.markdown("• No filters applied")
     
     # Key metrics
-    st.header("📊 Market Overview")
+    st.header("Market Overview")
     col1, col2, col3, col4, col5 = st.columns(5)
     
     with col1:
@@ -618,7 +638,7 @@ def main():
     
     # Investment opportunities
     st.markdown('<div class="insight-box">', unsafe_allow_html=True)
-    st.markdown("### 🎯 Investment Opportunities")
+    st.markdown("### Investment Opportunities")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Excellent Investments", market_summary['excellent_investments'])
@@ -644,7 +664,7 @@ def main():
         st_folium(map_fig, width=900, height=600)
         
         # Map insights with smaller, more readable text
-        st.markdown("### 🎯 Map Insights")
+        st.markdown("### Map Insights")
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("**Color Coding:**")
@@ -720,11 +740,11 @@ def main():
         
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("### 📊 Market Saturation Analysis")
+            st.markdown("### Market Saturation Analysis")
             st.dataframe(saturation_analysis, use_container_width=True)
         
         with col2:
-            st.markdown("### 🚀 Growth Potential Leaders")
+            st.markdown("### Growth Potential Leaders")
             growth_leaders = df_with_growth.nlargest(10, 'growth_potential')[['name', 'neighbourhood', 'growth_potential', 'roi_potential', 'price']]
             st.dataframe(growth_leaders, use_container_width=True)
     
@@ -736,7 +756,7 @@ def main():
         st.plotly_chart(heatmap_fig, use_container_width=True)
         
         # Top opportunities
-        st.markdown("### 🎯 Top Investment Opportunities")
+        st.markdown("### Top Investment Opportunities")
         opportunities_df = filtered_df.nlargest(20, 'market_score')[['name', 'neighbourhood', 'price', 'roi_potential', 'market_score', 'investment_grade', 'airbnb_url']]
         st.dataframe(opportunities_df, use_container_width=True)
     
@@ -828,6 +848,9 @@ def main():
     # Footer
     st.markdown("---")
     st.markdown("**💼 Investment Intelligence Dashboard** | **Data Source:** Vancouver Airbnb Market Analysis | **Last Updated:** " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    
+    # Data source attribution
+    st.markdown("**Data Source:** This analysis uses data from [Inside Airbnb](https://insideairbnb.com/get-the-data/) - a mission-driven project that provides data and advocacy about Airbnb's impact on residential communities.")
 
 if __name__ == "__main__":
     main()
