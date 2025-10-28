@@ -34,9 +34,13 @@ This project provides investors, real estate professionals, and market analysts 
 - **Investment Opportunities** - Undervalued properties and high-potential areas
 - **Risk Assessment** - Market saturation and competitive landscape analysis
 
-##    Live Demo
+## Live Demo
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://vancouver-airbnb-dashboard.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://vancouver-airbnb-investment-intelligence-dashboard.streamlit.app/)
+
+**🚀 Live Application**: [https://vancouver-airbnb-investment-intelligence-dashboard.streamlit.app/](https://vancouver-airbnb-investment-intelligence-dashboard.streamlit.app/)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen)](https://vancouver-airbnb-investment-intelligence-dashboard.streamlit.app/) [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/sharma93manvi/Vancouver-Airbnb-Investment-Intelligence-Dashboard)
 
 ## 📁 Project Structure
 
