@@ -853,4 +853,8 @@ def main():
     st.markdown("**Data Source:** This analysis uses data from [Inside Airbnb](https://insideairbnb.com/get-the-data/) - a mission-driven project that provides data and advocacy about Airbnb's impact on residential communities.")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        st.error(f"An error occurred: {str(e)}")
+        st.error("Please check the data files and try again.")
